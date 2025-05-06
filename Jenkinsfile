@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/yourusername/yourrepo.git'
+                git 'https://github.com/AimanHaikall/BlogPostCategory.API.git'
             }
         }
         stage('Install Dependencies') {
