@@ -1,21 +1,36 @@
 pipeline {
     agent any
+
     stages {
-        stage('Install Dependencies') {
+        stage('Checkout') {
             steps {
-                bat 'npm install'
+                checkout scm
             }
         }
-        stage('Lint & Test') {
+
+        stage('Restore') {
             steps {
-                bat 'npm run lint'
-                bat 'npm test'
+                bat 'dotnet restore'
             }
         }
+
         stage('Build') {
             steps {
-                bat 'npm run build'
+                bat 'dotnet build --no-restore'
             }
         }
+
+        stage('Test') {
+            steps {
+                bat 'dotnet test --no-build --verbosity normal'
+            }
+        }
+
+        // Optional: Add Publish step if needed
+        // stage('Publish') {
+        //     steps {
+        //         bat 'dotnet publish -c Release -o ./publish'
+        //     }
+        // }
     }
 }
